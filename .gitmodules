@@ -1,0 +1,6 @@
+[submodule "rarch-encoding"]
+	path = rarch-encoding
+	url = https://github.com/jmbert/rarch-encoding
+[submodule "rarch-emulator"]
+	path = rarch-emulator
+	url = https://github.com/jmbert/rarch-emulator

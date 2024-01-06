@@ -1,0 +1,85 @@
+Instruction Format:
+
+IMMLEN: 8, 16, 32, 64 bits
+
+Opcode:
+	[0:1] Format
+	[2:7] Index into table
+
+Format A: (No arguments) 16 Bits
+	[0:7  ]	Prefix
+	[8:15 ] Opcode
+
+Format B: (One register argument) 24 Bits
+	[0:7  ]	Prefix
+	[8:15 ] Opcode
+	[16:23] Register
+
+Format C: (Register, Immediate) 24 + IMMLEN Bits
+	[0:7  ]		Prefix
+	[8:15 ] 	Opcode
+	[15:23] 	Register
+	[23:IMMLEN]	Immediate
+
+Format D: (Register, Register) 32 Bits
+	[0:7  ]	Prefix
+	[8:15  ] Opcode
+	[16:23 ] Destination Register
+	[24:31] Source Register
+
+
+
+
+Register Encoding: 8 bits
+	[0:1]	Register Type
+	[2:3]	Register Size
+	[4:7]	Register Index (16 possible values)
+
+General Purpose (00): 
+	R0: 	Zero register
+	R1-14: 	General Purpose
+	SP, BP: Stack and Base pointers
+
+Index Registers (01):
+	I0-I15: Index pointer registers
+
+Mass transfer registers (10):
+	S0-S7: 	Source Pointers
+	D0-D7: 	Destination Pointers
+
+Control Registers: (11):
+	C0-C15: Control registers
+
+Status register (64 bits):
+	[0   ] Carry Flag
+	[1   ] Zero Flag
+	[2:5 ] Current Index Register
+	[6:7 ] Offset Size
+	[8   ] Parity Flag
+	[9   ] Sign Flag
+	[10  ] Halted Flag
+
+
+
+
+Addressing Modes:
+	- Absolute 	(Address accessed directly)
+	- Instruction Relative 	(Address treated as offset to pc)
+	- Index Relative 		(Address treated as offset to current index register)
+
+Relative Indexing:
+	Indexing to PC or index register is done by shifting the offset left by the offset size specified in the status register, 
+	then adding it to the base register (PC or Index)
+
+
+
+
+Registers:
+	R0-13
+	SP, BP
+	I0-15
+	S0-7
+	D0-7
+	C0-15
+	Status
+	PC
